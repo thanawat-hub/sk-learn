@@ -15,8 +15,8 @@ d = st.select_slider("Select PCA dimension",
 if d == 3:
     X = PCA(n_components=3).fit_transform(df.iloc[:, :4]) # ouput เป็น numpy array
     # X = PCA(n_components=3).fit_transform(df.iloc[['ชื่อcolumn'],['ชื่อcolumn']])?
-    X = pd.DataFrame(X, columns=['x', 'y', 'z']) # ทำกลับมาให้เป็น df
-    X['species'] = df['species'] # เอามิติที่ 4 ไปใส่ใน X ตัวแปรใหม่ที่ลด dim แล้ว
+    X = pd.DataFrame(X, columns=['x', 'y', 'z']) # ทำกลับมาให้เป็น df # ตรงนี้คือการเปลี่ยน แกนเป็นแกนใหม่แล้ว ซึ่งจะชื่อ pc1 pc2 แต่ใช้ x,y,zให้เข้าใจตรงกัน ซึ่งไม่รู้นะว่าคืออะไร จาก 4 มิติ ที่มัน compress มาเป็นสิ่งใหม่ใน 3 มิติ ที่ rotate แกนไปแล้ว (= space ใหม่ที่รู้แค่ data point ใกล้กันไหม)
+    X['species'] = df['species'] # index 4 ไปใส่ใน X ตัวแปรใหม่ที่ลด dim แล้ว
     fig = px.scatter_3d(X,
                         x='x',
                         y='y',
