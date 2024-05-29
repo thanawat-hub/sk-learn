@@ -8,6 +8,7 @@ import altair as alt # to plot
 
 X = load_diabetes(as_frame=True)
 
+max_feature = X.data.shape[1]
 # Sidebar section for user input
 st.sidebar.header("Feature Selection Parameters")
 score_func = st.sidebar.selectbox("Score function",
@@ -15,7 +16,7 @@ score_func = st.sidebar.selectbox("Score function",
 
 mode = st.sidebar.selectbox("Selection Mode", ["k_best", "percentile"]) #ที่เหลือนี้ไปใช้กับ classif , "fpr", "fdr", "fwe"]) เพราะบางทีค่าอาจจะหาย
 if mode == 'k_best':
-    param = st.sidebar.slider("Number of feature", 1, 10, 5)
+    param = st.sidebar.slider("Number of feature", 1, max_feature, int(max_feature/2))
 
 if mode == 'percentile':
     param = st.sidebar.slider("Percentile", 1, 100, 50)
