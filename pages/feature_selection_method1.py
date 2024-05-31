@@ -25,19 +25,22 @@ if 'titanic' in dataset_names:
   titanic_index = dataset_names.index('titanic')
 
 
-st.title("Select Datasets")
+st.title("Feature selection only have X (data no label no ml for find importance feature)")
 # Create the selectbox with 'titanic' as the default if available
-ds = st.selectbox("from seaborn.get_dataset_names()", dataset_names, key="dataset_selectbox", index=titanic_index)
+ds = st.selectbox("select dataset from seaborn.get_dataset_names()", dataset_names, key="dataset_selectbox", index=titanic_index)
 # ds = st.selectbox("Select Dataset, sns.get_dataset_names())
 
-df = sns.load_dataset(ds)
 ### drop target ทำให้เหมือนมีแค่ DATA (X) เท่านั้น
-target_column_index = ['survived', 'alive']# ซึ่งมี 2 ค่า
-df = df.drop(target_column_index, axis=1)# df_without_target
-
+drop_target_name = st.selectbox("do you want to manual drop target (if have have)? doing for titanic only support", ['yes', 'no'], index=0)
+if drop_target_name == "yes":
+    df = sns.load_dataset(ds)
+    st.write("drop ['survived', 'alive'] before | pretend to have data just X no target data")
+    target_column_index = ['survived', 'alive']# ซึ่งมี 2 ค่า
+    df = df.drop(target_column_index, axis=1)# df_without_target
+else:
+    df = sns.load_dataset(ds)
 ###
 with st.expander(f"Check unique of each features ( have {len(df.columns)} feature )"):
-    st.write("drop ['survived', 'alive'] before | pretend to have data just X no target data")
     df_nunique = df.nunique()
     df_nunique.name = "Count of unique values"
     df_nunique
@@ -76,7 +79,8 @@ def count_null_and_rename(df):
   null_counts.name = "Count of Null Values"
   return null_counts
 
-st.title("1: Check Nan & Correlation & 2: drop duplicate column")
+st.title("1: Check Nan & Correlation &")
+st.title("2: drop duplicate column")
 with st.expander("Check Nan & Correlation compare before after drop nan"):
     df_nuniqu = count_null_and_rename(df.copy())
     df_nuniqu
