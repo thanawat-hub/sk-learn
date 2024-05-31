@@ -1,4 +1,4 @@
-#same each file "feature_selection_classification.py", feature_selection_regression.py" but in one file seperate with tap
+#same each file "feature_selection_classification_method2.py", feature_selection_regression_method2.py" but in one file seperate with tap
 
 import streamlit as st
 from sklearn.datasets import load_diabetes, load_iris
